@@ -1,0 +1,50 @@
+/* Base */
+.resume {
+    --ink: #e7e7e7;
+    --muted: #b8c0d0;
+    --heading: #ffffff;
+    --accent: #7aa2f7;
+    --rule: rgba(255,255,255,.12);
+    color: var(--ink);
+    background: #000;           /* site is black per your theme */
+    padding: 28px 22px 40px;
+    max-width: 100%;
+    margin: 0 auto;
+    line-height: 1.5;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  }
+  
+  /* Header */
+  .resume__header { border-bottom: 1px solid var(--rule); padding-bottom: 12px; margin-bottom: 18px; }
+  .resume__name { margin: 0 0 4px; font-size: 32px; color: #6c57ce; letter-spacing: .5px; }
+  .resume__contacts { margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 10px 18px; color: var(--muted); }
+  .resume__contacts a { color: var(--muted); text-decoration: none; }
+  .resume__contacts a:hover { color: var(--accent); }
+  .resume__title { margin: 0 0 4px; font-size: 18px; color: #6c57ce; }
+  
+  /* Sections */
+  section { margin: 16px 0 18px; }
+  h3 { margin: 0 0 8px; color: #6c57ce; font-size: 16px; letter-spacing: .3px; text-transform: uppercase; }
+  h4 { margin: 0; color: #6c57ce; font-size: 15px; }
+  ul { margin: 8px 0 0 18px; padding: 0; }
+  li { margin: 6px 0; }
+  
+  /* Roles */
+  .role { margin-bottom: 14px; }
+  .role__meta { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); }
+  .role__meta h4 { color: #3792bc; }
+  .role__meta span { white-space: nowrap; }
+  
+  /* Two column block (Education / Technologies) */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  
+  /* Print styles */
+  @media print {
+    .resume { background: #fff; color: #111; padding: 0; }
+    .resume__name { color: #000; }
+    .resume__title { color: #000; }
+    .resume__contacts a { color: #333; }
+    .role__meta { color: #333; }
+    .resume, section { break-inside: avoid; }
+  }
