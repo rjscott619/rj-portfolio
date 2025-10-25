@@ -3,6 +3,7 @@ import reactLogo from './assets/logo.png'
 import './styles.css'
 import Resume from "./features/profile/resume";
 import API_BASE_URL from './config.js'
+import ReactMarkdown from 'react-markdown'
 
 export default function App() {
   const [activeContentIndex, setActiveContentIndex] = useState(0)
@@ -34,7 +35,14 @@ export default function App() {
     - Do NOT make up specific details, metrics, or experiences not mentioned in the provided context.
     - If asked about something not in the provided context, say "I don't have specific details about that in my records" and offer a general perspective instead.
     - IMPORTANT: When specific metrics, percentages, or achievements are mentioned in the Resume section, you MUST include them in your response. Do not be overly conservative - use the exact numbers and percentages provided.
-    - FORMATTING: Do not use Markdown formatting (like **bold** or *italic*). Use plain text only.
+    - FORMATTING: Use Markdown formatting for better readability:
+      * Use **bold** for emphasis on key points
+      * Use *italics* for important terms
+      * Use ### for section headers
+      * Use - for bullet points
+      * Use > for quotes or highlights
+      * Use `code` for technical terms
+      * Use numbered lists (1., 2., 3.) for steps or achievements 
 
     ## Summary:
     ${summary}
@@ -227,7 +235,9 @@ const send = async () => {
         />
         <button onClick={send} className="submit-button">Send</button>
       </div>,
-      <pre>{reply}</pre>,
+      <div className="markdown-response">
+        <ReactMarkdown>{reply}</ReactMarkdown>
+      </div>,
       <div style={{ marginTop: 12 }}>
         <b>How I implemented this: </b>
         <button onClick={loadReadme} className="submit-button">
