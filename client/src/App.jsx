@@ -41,7 +41,7 @@ export default function App() {
       * Use ### for section headers
       * Use - for bullet points
       * Use > for quotes or highlights
-      * Use `code` for technical terms
+      * Use backticks for code formatting
       * Use numbered lists (1., 2., 3.) for steps or achievements 
 
     ## Summary:
