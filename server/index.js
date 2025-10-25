@@ -113,14 +113,44 @@ app.get("/api/readme", async (_req, res) => {
 app.post('/api/chat', async (req, res) => {
   try {
     const messages = req.body?.messages ?? [{ role: 'user', content: 'Say hello!' }];
+    console.log('Messages received:', JSON.stringify(messages, null, 2));
+    
+    // Check if API key is present
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('OpenAI API key is missing');
+      return res.status(500).json({ 
+        error: 'Server configuration error', 
+        message: 'OpenAI API key is not configured. Please set OPENAI_API_KEY in environment variables.' 
+      });
+    }
+    
     const r = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages
     });
     res.json({ reply: r.choices[0].message.content });
   } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'OpenAI request failed' });
+    console.error('OpenAI error details:', e.message);
+    console.error('Error stack:', e.stack);
+    
+    // Handle specific error types
+    if (e.status === 401) {
+      res.status(401).json({ 
+        error: 'Authentication failed', 
+        message: 'Invalid OpenAI API key. Please check your API key configuration.',
+        hint: 'Update your API key at https://platform.openai.com/account/api-keys'
+      });
+    } else if (e.status === 429) {
+      res.status(429).json({ 
+        error: 'Rate limit exceeded', 
+        message: 'Too many requests. Please try again later.' 
+      });
+    } else {
+      res.status(500).json({ 
+        error: 'OpenAI request failed', 
+        message: e.message || 'An unexpected error occurred' 
+      });
+    }
   }
 });
 

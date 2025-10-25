@@ -60,6 +60,10 @@ The AI has been trained on Rudolph's actual data and can discuss:
 ### 🏢 Companies & Industries
 **ServiceNow** → **GoFundMe** → **Xifin** → **DivX** → **Intuit** → **Leadfusion** → **ID Analytics** → **ActiveNetwork** → **Digital Deluxe Studio**
 
+## 🌐 Live Demo
+
+🔗 **Live Site**: [https://rjscott619.github.io/rj-portfolio/](https://rjscott619.github.io/rj-portfolio/)
+
 ## 🚀 Quick Start
 
 ### 📋 Prerequisites
@@ -80,7 +84,7 @@ npm run dev            # runs on http://localhost:3001
 ```bash
 cd client
 npm install
-npm run dev            # opens http://localhost:5175
+npm run dev            # opens http://localhost:5173
 ```
 
 #### 3️⃣ Alternative: Run Both (Optional)
@@ -91,10 +95,24 @@ npm run dev
 ```
 
 ### 🎯 How to Use
-1. **Open** `http://localhost:5175/` in your browser
+1. **Open** `http://localhost:5173/` in your browser
 2. **Click** "Chat with AI Version of myself" tab
 3. **Type** a question and click **Send**
 4. **Watch** the AI respond as Rudolph Scott!
+
+## 📤 Deploy to GitHub Pages
+
+To deploy your site to GitHub Pages:
+
+```bash
+cd client
+npm run deploy
+```
+
+This will:
+1. Build the production version of your app
+2. Deploy to the `gh-pages` branch
+3. Make your site available at `https://YOUR_USERNAME.github.io/rj-portfolio/`
 
 ## 💬 Example Questions to Ask
 
