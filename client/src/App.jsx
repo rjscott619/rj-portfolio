@@ -194,6 +194,9 @@ const send = async () => {
     console.log('Response text:', responseText)
     const data = JSON.parse(responseText)
     setReply(data.reply ?? JSON.stringify(data, null, 2))
+    
+    // Clear the input text after successful send
+    setText('')
   } catch (e) {
     console.error('Chat error:', e)
     setReply(`Error: ${e.message}`)
