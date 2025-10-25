@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import reactLogo from './assets/logo.png'
 import './styles.css'
 import Resume from "./features/profile/resume";
+import API_BASE_URL from './config.js'
 
 export default function App() {
   const [activeContentIndex, setActiveContentIndex] = useState(0)
@@ -59,8 +60,18 @@ ${resume}
     try {
       setPdfLoading(true)
       setPdfText('Loading PDF...')
-      const resp = await fetch('/api/pdf-text')
-      const data = await resp.json()
+      const resp = await fetch(`${API_BASE_URL}/api/pdf-text`)
+      
+      if (!resp.ok) {
+        throw new Error(`HTTP error! status: ${resp.status}`)
+      }
+      
+      const text = await resp.text()
+      if (!text) {
+        throw new Error('Empty response from server')
+      }
+      
+      const data = JSON.parse(text)
       
       if (data.text && data.text.length > 0) {
         // Combine all parts of the resume for complete information
@@ -79,9 +90,23 @@ ${resume}
   /* ******** Summary About Me Parsing ******** */
   const loadSummary = async () => {
     try {
-      // Load summary from the API endpoint
-      const response = await fetch('/api/summary');
-      const data = await response.json();
+    console.log('Loading summary from http://localhost:3001/api/summary')
+    // Load summary from the API endpoint
+    const response = await fetch(`${API_BASE_URL}/api/summary`);
+      
+      console.log('Response status:', response.status)
+      console.log('Response URL:', response.url)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
+      const text = await response.text()
+      if (!text) {
+        throw new Error('Empty response from server')
+      }
+      
+      const data = JSON.parse(text)
       
       if (data.summary) {
         setSummary(data.summary);
@@ -89,6 +114,7 @@ ${resume}
         setSummary('No summary found');
       }
     } catch (e) {
+      console.error('Summary loading error:', e)
       setSummary(`Error: ${e.message}`)
     }
   }
@@ -102,8 +128,18 @@ ${resume}
     }
     
     try {
-      const response = await fetch('/api/readme');
-      const data = await response.json();
+      const response = await fetch(`${API_BASE_URL}/api/readme`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
+      const text = await response.text()
+      if (!text) {
+        throw new Error('Empty response from server')
+      }
+      
+      const data = JSON.parse(text)
       
       if (data.readme) {
         setReadmeContent(data.readme);
@@ -123,7 +159,12 @@ const send = async () => {
   try {
     setReply('Loading...')
     const system_prompt = buildSystemPrompt('Rudolph Scott', summary, resume)
-    const resp = await fetch('/api/chat', {
+    
+    console.log('Sending chat request to /api/chat')
+    console.log('User input:', text)
+    console.log('System prompt length:', system_prompt.length)
+    
+    const resp = await fetch(`${API_BASE_URL}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -133,9 +174,27 @@ const send = async () => {
         ]
       })
     })
-    const data = await resp.json()
+    
+    console.log('Response status:', resp.status)
+    console.log('Response URL:', resp.url)
+    console.log('Response headers:', resp.headers)
+    
+    if (!resp.ok) {
+      const errorText = await resp.text()
+      console.error('Error response:', errorText)
+      throw new Error(`HTTP error! status: ${resp.status}`)
+    }
+    
+    const responseText = await resp.text()
+    if (!responseText) {
+      throw new Error('Empty response from server')
+    }
+    
+    console.log('Response text:', responseText)
+    const data = JSON.parse(responseText)
     setReply(data.reply ?? JSON.stringify(data, null, 2))
   } catch (e) {
+    console.error('Chat error:', e)
     setReply(`Error: ${e.message}`)
   }
 }
@@ -165,20 +224,18 @@ const send = async () => {
         <button onClick={send} className="submit-button">Send</button>
       </div>,
       <pre>{reply}</pre>,
-        <div style={{ marginTop: 12 }}>
-          <p></p>
-          <b>How I implemented this: </b>
-          <button onClick={loadReadme} className="submit-button">
-            {showReadme ? 'Hide' : 'View'}
-          </button>
-          {showReadme && readmeContent && (
-            <div className="readme-content">
-              <h3>Project README:</h3>
-              <pre>{readmeContent}</pre>
-            </div>
-          )}
-        </div>,
-      
+      <div style={{ marginTop: 12 }}>
+        <b>How I implemented this: </b>
+        <button onClick={loadReadme} className="submit-button">
+          {showReadme ? 'Hide' : 'View'}
+        </button>
+        {showReadme && readmeContent && (
+          <div className="readme-content">
+            <h3>Project README:</h3>
+            <pre>{readmeContent}</pre>
+          </div>
+        )}
+      </div>
     ],
     [
       'Official web page (react.dev)',

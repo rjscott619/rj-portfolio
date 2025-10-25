@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: rj-portfolio-backend
+    env: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false  # You'll set this in Render dashboard
+    healthCheckPath: /api/pdf-text
+
