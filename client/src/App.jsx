@@ -155,7 +155,7 @@ export default function App() {
     }
   }
   
-/* ******** OpenAI ******** */
+/* ******** CAll to OpenAI ******** */
 const send = async () => {
   try {
     setReply('Loading...')
@@ -239,7 +239,7 @@ const send = async () => {
       </div>
     ],
     [
-      'Placeholder',
+      'Placeholder', 
     ]
   ]
 
