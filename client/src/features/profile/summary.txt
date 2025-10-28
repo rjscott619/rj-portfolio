@@ -11,3 +11,10 @@ ActiveNetwork - Event Management / SaaS - Provides software for online event reg
 Digital Deluxe Studio - Digital Marketing / Web Solutions - A creative studio delivering web, mobile, and interactive digital solutions—likely focused on design and user experience.
 GoFundMe - Crowdfunding / Nonprofit Tech - A global social fundraising platform enabling individuals and organizations to raise money for personal, charitable, or community causes.
 ServiceNow - Enterprise Software / Cloud Computing - A leading digital workflow and IT service management platform offering solutions for ITSM, HR, customer service, and AI-driven enterprise automation.
+
+
+Biggest challenge 
+One of my biggest challenge was how to scale myself as I took on more teams under me. What I learned is that you are not going to have enough time to be in every meeting and know all details. So I had
+to learn how to leverage my teammates and rely on them. For example, on the Mobile Platform team I was in charge of overseeing the release to ensure all of our tasks get completed in a timely manner
+and raise any risks or concerns that can jerporized our release. I couldn't keep up with getting involved in the day to day activities so I can to scale myself and empower my team by creating the Tech Lead Role for QE. I had to define the process
+and provide dashboards they can lerverage to track tasks, etc... For every release I would have each QE member be on rotation to oversee the Mobile Platform release which resulted in each team member being accountable and now understanding all the moving parts for being able to release a quality product

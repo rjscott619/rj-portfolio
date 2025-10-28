@@ -11,8 +11,26 @@ import pdf from 'pdf-text-extract';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-app.use(cors());
+
+// Enhanced CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5174', 
+    'https://rjscott619.github.io',
+    'https://rjscott619.github.io/rj-portfolio'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
+
 app.use(express.json());
+
+// Handle preflight requests
+app.options('*', (req, res) => {
+  res.status(200).end();
+});
 
 // GET /api/pdf-text -> reads a local PDF on the server's disk
 console.log("PDF parsing ready...");
